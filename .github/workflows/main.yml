@@ -1,27 +1,4 @@
-# name: Deploy API on push to main
- 
-# on:
-#   push:
-#     branches: [ main ]
- 
-# jobs:
-#   deploy:
-#     runs-on: self-hosted
-#     steps:
-#       - name: Deploy Lifelog API
-#         uses: shimataro/ssh-key-action@v2
-#         with:
-#           host: ${{ secrets.SSH_HOST }}
-#           username: ${{ secrets.SSH_USERNAME }}
-#           key: ${{ secrets.SSH_KEY }}
-#           script: |
-#             cd /var/www/api.lifelog/ # navigate into the folder
-#             git pull origin main # pull from the 'main' branch
-#             npm ci # install dependencies 
-#             npm run build # build from TypeScript
-#             pm2 restart ecosystem.config.js # start as a background service.
-
-name: remote ssh command
+name: Deploy API
 on:
   push:
     branches: [ main ]
@@ -38,4 +15,9 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
-        script: neofetch
+        script: |
+            cd /var/www/api.lifelog/ # navigate into the project folder
+            git pull origin main # pull from the 'main' branch
+            npm ci # install dependencies 
+          # npm run build # build from TypeScript
+            pm2 restart ecosystem.config.js # start as a background service.

@@ -12,4 +12,4 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     return console.log(`The network API is listening on port ${port}`);
 });
-//# sourceMappingURL=network-api.js.map
+//# sourceMappingURL=lifelog-api.js.map

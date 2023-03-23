@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, QueryResult } from 'pg';
 import config from './config';
 
 const params = {
@@ -11,16 +11,8 @@ const params = {
 
 const Connect = new Pool(params);
 
-const Query = (query: string) => {
-    Connect.query(query, (error, result) => {
-        if (error) {
-            console.error('Postgres: Error executing query', error.stack);
-            return error;
-        } else {
-            console.log('Postgres: Query result:', result.rows);
-            return result;
-        }
-    });
+function Query(sql: string, values?: any[]): Promise<QueryResult> {
+    return Connect.query(sql, values);
 };
 
 export { Connect, Query };

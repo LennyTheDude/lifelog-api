@@ -23,7 +23,10 @@ const register = (req: Request, res: Response, next: NextFunction) => {
             });
         }
 
-        // @TODO: insert user into DB        
+        // @TODO: insert user into DB
+
+        // let query = `INSERT INTO users (username, password) VALUES ("${username}", "${hash}")`;
+        // let result = Query(query);        
     });
 }
 

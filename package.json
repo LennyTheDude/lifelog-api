@@ -5,7 +5,7 @@
   "main": "dist/lifelog-api.js",
   "scripts": {
     "build": "npx tsc",
-    "dependencies": "rm -rf node_modules && yarn install --frozen-lockfile",
+    "dependencies": "rm -rf node_modules && yarn install --frozen-lockfile --ignore-engines",
     "dev": "npx nodemon src/lifelog-api.ts",
     "lint": "npx eslint . --ext .ts",
     "start": "tsc && node dist/lifelog-api.js",

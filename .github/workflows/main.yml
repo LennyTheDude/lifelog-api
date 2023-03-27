@@ -19,4 +19,5 @@ jobs:
             cd /var/www/api.lifelog/ # navigate into the project folder
             git pull origin main # pull from the 'main' branch
             yarn dependencies # install dependencies 
-            pm2 restart ecosystem.config.js # start as a background service.
+            yarn build # build the app
+            pm2 restart ecosystem.config.js # start as a background service

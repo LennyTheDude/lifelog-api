@@ -64,13 +64,25 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
             const passMatch = await bcryptjs.compare(password, result.rows[0].password);
 
             if (passMatch) {
-                console.log("Login: passwords match");
+                console.log("Login: passwords match.");
+                
+                signJWT(result.rows[0], (_error, token) => {
+                    if (_error) {
+                        console.log("Login: error signing JWT.");
 
-                // @TODO: create JWT Tokens & send with response
+                        return res.status(401).json({
+                            message: 'Login: Unable to Sign JWT',
+                            error: _error
+                        });
+                    } else if (token) {
+                        console.log("Login: JWT signed successfully.");
 
-                return res.status(201).json({ 
-                    message: "Login successful",
-                    id: result.rows[0]._id
+                        return res.status(201).json({ 
+                            message: "Login successful",
+                            user_id: result.rows[0]._id,
+                            token
+                        });
+                    }
                 });
             } else {
                 console.error("Login: Incorrect password");
@@ -93,9 +105,12 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
     Query("SELECT * FROM users")
         .then(result => {
-            console.log('Retrieved users from database.', result.rows)
+            console.log('Get All Users: Retrieved users from database.', result.rows)
 
-            return res.status(201).json(result.rows);
+            return res.status(201).json({
+                count: result.rows.length,
+                users: result.rows
+            });
         })
         .catch(error => {
             console.error(`Get All Users: ${error.message, error}`)
